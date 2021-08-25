@@ -1,8 +1,13 @@
 # rl_helper
 A few easy to use helper tools for your RL related works.
 
+## Install
 
-## gym_env_helper (GIF gym recorder)
+    pip install rl-helper
+
+# Tools
+
+## 1. Gym Env Helper (GIF gym recorder)
 
 It helps you record your gym into gif. See the example [tests/play_gym.py](tests/play_gym.py).
 

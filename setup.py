@@ -8,7 +8,7 @@ required = [
 
 
 setup(
-    name='rlhelper',
+    name='rl_helper',
     version="0.1.0",
     author="cywgoog@gmail.com",
     packages=find_packages(),
