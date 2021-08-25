@@ -12,7 +12,7 @@ A few easy to use helper tools for your RL related works.
 It helps you record your gym into gif. See the example [tests/play_gym.py](tests/play_gym.py).
 
     import gym
-    from rlhelper import envhelper
+    from rl_helper import envhelper
 
     env = gym.make('CartPole-v1')
     gym_env_helper=envhelper()  # * 1. Init your env helper

@@ -1,5 +1,5 @@
 import gym
-from rlhelper import envhelper
+from rl_helper import envhelper
 
 if __name__=="__main__":
 

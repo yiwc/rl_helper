@@ -1,6 +1,6 @@
 print("please install mujoco-py")
 # import gym
-# from rlhelper import envhelper
+# from rl_helper import envhelper
 # if __name__=="__main__":
 
 #     env = gym.make('FetchReach-v1')

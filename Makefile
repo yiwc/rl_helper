@@ -6,13 +6,13 @@ install:
 test:
 	pytest tests -vv ./tests/
 
-build:
+build: clean
 	python3 -m build
 
 clean:
 	rm -rf ./dist || true
 
-upload: clean build
+upload: build
 	python3 -m twine upload dist/*
 
 format:
