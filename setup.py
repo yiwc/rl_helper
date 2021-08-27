@@ -11,7 +11,7 @@ setup(
     name='rl_helper',
     version="0.2.0",
     author="cywgoog@gmail.com",
-    packages=find_packages(),
+    packages=find_packages(include=['rl_helper']),
     include_package_data=True,
     install_requires=required
 )

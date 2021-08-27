@@ -2,6 +2,8 @@ from matplotlib import animation
 import matplotlib.pyplot as plt
 from datetime import datetime
 import os
+
+
 class envhelper(object):
     from pyvirtualdisplay import Display
     virtual_display = Display(visible=0, size=(1400, 900))
@@ -10,7 +12,7 @@ class envhelper(object):
     def __init__(self) -> None:
         super().__init__()
  
-    def recording(self,env):
+    def recording(self,env,):
         self.frames = [] if getattr(self,"frames",None) is None else getattr(self,"frames",None) ;
         self.frames.append(env.render(mode="rgb_array"))
         self.env=env

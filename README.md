@@ -7,7 +7,7 @@ A few easy to use helper tools for your RL related works.
 
 # Tools
 
-## 1. Gym Env Helper (GIF gym recorder)
+## GIF recorder
 
 It helps you record your gym into gif. See the example [tests/play_gym.py](tests/play_gym.py).
 
@@ -36,3 +36,17 @@ Find the GIF in the folder [runs / EnvID / YYYYMMDD-HrMinSc.gif](runs/)
 <img src="runs/CartPole-v1/20210825-175235.gif" height=125>
 
 <img src="runs/Pendulum-v0/20210825-175459.gif" height=125>
+
+
+<br/>
+
+------
+
+
+## 2.  FPS test
+
+    env = gym.make('Pendulum-v0')
+    env.reset()
+    fps(env)
+
+    
