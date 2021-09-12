@@ -1,0 +1,6 @@
+env: Pendulum-v0
+n_envs: 4
+policy: MlpPolicy
+sde_sample_freq: 50000
+total_timesteps: 3000000
+use_sde: true

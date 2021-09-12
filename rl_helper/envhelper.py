@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import os
 
-
+import pathlib
 class envhelper(object):
     from pyvirtualdisplay import Display
     virtual_display = Display(visible=0, size=(1400, 900))
@@ -17,7 +17,12 @@ class envhelper(object):
         self.frames.append(env.render(mode="rgb_array"))
         self.env=env
 
-    def save_gif(self,path=None,filename=None,times=5):
+    def save_gif(self, 
+    path=None, 
+    comment="",
+    filename=None,
+    times=5,
+    refresh=True):
         """
         save frames to gif
         """
@@ -43,13 +48,19 @@ class envhelper(object):
                 patch.set_data(frames[i])
 
             anim = animation.FuncAnimation(plt.gcf(), animate, frames = len(frames), interval=1000)
-            anim.save(path + filename, writer='imagemagick', fps=60)
+            anim.save(path.joinpath(filename), writer='imagemagick', fps=60)
         
         now = datetime.now() # current date and time    
         t=now.strftime("%Y%m%d-%H%M%S")
-        assert path is None and filename is None, "not support diy path and filename"
-        gif_name="{t}.gif".format(t=t)
-        dirs="./runs/{env}/".format(env=self.env.spec.id)
+        # assert path is None and filename is None, "not support diy path and filename"
+        gif_name="{t}{comment}.gif".format(t=t,comment="_{}".format(comment))
+        path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
+        os.makedirs(path,exist_ok=True)
+        dirs = path.joinpath(self.env.spec.id)
+        # dirs="./runs/{path}{env}/".format(path=path, env=self.env.spec.id)
         os.makedirs(dirs,exist_ok=True)
         _save_frames_as_gif(self.frames,path=dirs,filename=gif_name,times=times)
         print("gif saved to {}{}".format(dirs,gif_name))
+
+        if refresh:
+            del self.frames

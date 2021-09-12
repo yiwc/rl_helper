@@ -1,0 +1,5 @@
+comments: show ppo with sde can solve pendulum
+exp_class: try
+exp_target: PPOSolvePendulum_v0
+model_name: ppo
+sub_id: 0

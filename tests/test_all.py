@@ -10,8 +10,9 @@ def run_test_script(name):
 names=["demo.py",
 "play_gym.py",
 "play_gym_pend.py",
-"play_gym_atari.py",
-"play_gym_reach.py",]
+# "play_gym_atari.py",
+"play_gym_reach.py",
+"exp_manager.py"]
 
 
 @pytest.mark.parametrize("name", names)
