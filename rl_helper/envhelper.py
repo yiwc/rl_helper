@@ -4,17 +4,28 @@ from datetime import datetime
 import os
 
 import pathlib
-class envhelper(object):
+
+def VDisplay():
     from pyvirtualdisplay import Display
     virtual_display = Display(visible=0, size=(1400, 900))
     virtual_display.start()
 
+class envhelper(object):
+    print("rl init the display... (if not respond in 5s, please kill this process)")
+    from pyvirtualdisplay import Display
+    virtual_display = Display(visible=0, size=(1400, 900))
+    virtual_display.start()
+    print("rl helper inited")
+
     def __init__(self) -> None:
         super().__init__()
  
-    def recording(self,env,):
-        self.frames = [] if getattr(self,"frames",None) is None else getattr(self,"frames",None) ;
-        self.frames.append(env.render(mode="rgb_array"))
+    def recording(self,env,env_image=None):
+        self.frames = [] if getattr(self,"frames",None) is None else getattr(self,"frames",None) 
+        if env_image is None:
+            self.frames.append(env.render(mode="rgb_array"))
+        else:
+            self.frames.append(env_image)
         self.env=env
 
     def save_gif(self, 
@@ -22,6 +33,7 @@ class envhelper(object):
     comment="",
     filename=None,
     times=5,
+    name="default",
     refresh=True):
         """
         save frames to gif
@@ -56,7 +68,12 @@ class envhelper(object):
         gif_name="{t}{comment}.gif".format(t=t,comment="_{}".format(comment))
         path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
         os.makedirs(path,exist_ok=True)
-        dirs = path.joinpath(self.env.spec.id)
+        
+        dirs = path.joinpath(str(self.env).split(" ")[0].replace("<",""))
+        # try:
+        #     dirs = path.joinpath(self.env.spec.id)
+        # except:
+        #     dirs = path.joinpath(self.env.spec.id)
         # dirs="./runs/{path}{env}/".format(path=path, env=self.env.spec.id)
         os.makedirs(dirs,exist_ok=True)
         _save_frames_as_gif(self.frames,path=dirs,filename=gif_name,times=times)
