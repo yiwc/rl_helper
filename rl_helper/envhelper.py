@@ -4,11 +4,24 @@ from datetime import datetime
 import os
 
 import pathlib
+def save_img(np_array,img_name="your_file.jpeg")->None:
+    from PIL import Image
+    im = Image.fromarray(np_array)
+    im.save(img_name)
 
 def VDisplay():
     from pyvirtualdisplay import Display
     virtual_display = Display(visible=0, size=(1400, 900))
     virtual_display.start()
+
+def now()->str:
+    """
+    get time of now
+    """
+
+    now = datetime.now() # current date and time    
+    t=now.strftime("%Y%m%d-%H%M%S")
+    return t
 
 class envhelper(object):
     print("rl init the display... (if not respond in 5s, please kill this process)")
@@ -62,8 +75,7 @@ class envhelper(object):
             anim = animation.FuncAnimation(plt.gcf(), animate, frames = len(frames), interval=1000)
             anim.save(path.joinpath(filename), writer='imagemagick', fps=60)
         
-        now = datetime.now() # current date and time    
-        t=now.strftime("%Y%m%d-%H%M%S")
+        t=now()
         # assert path is None and filename is None, "not support diy path and filename"
         gif_name="{t}{comment}.gif".format(t=t,comment="_{}".format(comment))
         path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
