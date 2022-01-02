@@ -18,15 +18,19 @@ class kb(object):
         self.listener = keyboard.Listener(on_release=self.on_press,)
         self.last_action=None
         self.kew2action=key2action
+        self.reset=None
 
     def on_press(self,key):
-        print("received:",key)
+        # print("received:",key)
         char=key.name if isinstance(key,keyboard.Key) else key.char
         action=self.kew2action.get(char,None)
         if action is None:
             print("input {} not supported in your key2action {}".format(key,self.kew2action.keys()))
         self.last_action=action
         # return False
+        if char=='r':
+            print("reset")
+            self.reset=True
 
     def start(self):
         self.listener.start()
@@ -53,7 +57,7 @@ class kbinteractor(object):
         fig, ax = plt.subplots()
 
         self.env.reset()
-        img=self.env.render("rgb_array")
+        img=self.env.render(mode="rgb_array",width=1080,height=920)
         ax.cla()
         ax.imshow(img)
         plt.pause(0.1)
@@ -61,13 +65,17 @@ class kbinteractor(object):
         self.kb.start()
         while True:
             obs,rew,dones,info=self.env.step(self.kb.get_action())
-            print('rew',rew)
+            # print('rew',rew)
             if dones:
                 self.env.reset()
-            img=self.env.render("rgb_array")
+            img=self.env.render(mode="rgb_array",width=1080,height=920)
             ax.cla()
             ax.imshow(img)
+            ax.set_title("rew={},done={}".format(round(rew,2),dones))
             plt.pause(0.1)
+            if self.kb.reset:
+                self.env.reset()
+                self.kb.reset=None
 
 if __name__=="__main__":
 
