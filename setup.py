@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 # Required dependencies
 required = [
-    "gym","pytest","matplotlib","pyvirtualdisplay","pyyaml","attrdict","PIL"
+    "gym","pytest","matplotlib","pyvirtualdisplay","pyyaml","attrdict"
 ]
 
 
