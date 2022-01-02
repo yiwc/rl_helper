@@ -9,7 +9,7 @@ required = [
 
 setup(
     name='rl_helper',
-    version="0.4",
+    version="0.5",
     author="cywgoog@gmail.com",
     packages=find_packages(include=['rl_helper']),
     include_package_data=True,
