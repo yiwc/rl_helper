@@ -3,13 +3,13 @@ from setuptools import find_packages, setup
 
 # Required dependencies
 required = [
-    "gym","pytest","matplotlib","pyvirtualdisplay","pyyaml","attrdict"
+    "gym","pytest","matplotlib","pyvirtualdisplay","pyyaml","attrdict","PIL"
 ]
 
 
 setup(
     name='rl_helper',
-    version="0.3",
+    version="0.4",
     author="cywgoog@gmail.com",
     packages=find_packages(include=['rl_helper']),
     include_package_data=True,
