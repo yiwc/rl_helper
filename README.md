@@ -5,6 +5,7 @@ A few easy to use helper tools for your RL related works.
 - Experiment Manager
 - GIF Recorder
 - FPS
+- Keyboard Interactor
 
 ## Install
 
@@ -103,4 +104,22 @@ Find the GIF in the folder [runs / EnvID / YYYYMMDD-HrMinSc.gif](runs/)
     env.reset()
     fps(env)
 
-    
+------
+
+## Keyboard Interactor
+
+    import gym
+    from rl_helper.keyboard import kbinteractor
+    interactor=kbinteractor(env=gym.make('FetchPickAndPlaceDense-v1'),
+            key2action={
+                    'right':[1,0,0,0],
+                    'left':[-1,0,0,0],
+                    'up':[0,1,0,0],
+                    'down':[0,-1,0,0],
+                    "y":[0,0,1,0],
+                    "h":[0,0,-1,0],
+                    "n":[0,0,0,1],
+                    "b":[0,0,0,-1],
+                })
+
+![d](runs/keyboard_interact.png) 

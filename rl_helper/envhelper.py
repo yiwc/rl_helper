@@ -4,10 +4,10 @@ from datetime import datetime
 import os
 
 import pathlib
-def save_img(np_array,img_name="your_file.jpeg")->None:
+def save_img(np_array,img_name="your_file")->None:
     from PIL import Image
     im = Image.fromarray(np_array)
-    im.save(img_name)
+    im.save(img_name+"_"+now()+".jpeg")
 
 def VDisplay():
     from pyvirtualdisplay import Display
@@ -24,13 +24,14 @@ def now()->str:
     return t
 
 class envhelper(object):
-    print("rl init the display... (if not respond in 5s, please kill this process)")
-    from pyvirtualdisplay import Display
-    virtual_display = Display(visible=0, size=(1400, 900))
-    virtual_display.start()
-    print("rl helper inited")
 
     def __init__(self) -> None:
+
+        print("rl init the display... (if not respond in 5s, please kill this process)")
+        from pyvirtualdisplay import Display
+        self.virtual_display = Display(visible=0, size=(1400, 900))
+        self.virtual_display.start()
+        print("rl helper inited")
         super().__init__()
  
     def recording(self,env,env_image=None):
@@ -93,3 +94,5 @@ class envhelper(object):
 
         if refresh:
             del self.frames
+
+        self.virtual_display.stop()
