@@ -2,6 +2,8 @@ from matplotlib import animation
 import matplotlib.pyplot as plt
 from datetime import datetime
 import os
+from PIL import Image, ImageFont, ImageDraw
+import numpy as np
 
 import pathlib
 def save_img(np_array,img_name="your_file")->None:
@@ -34,12 +36,19 @@ class envhelper(object):
         print("rl helper inited")
         super().__init__()
  
-    def recording(self,env,env_image=None):
+    def recording(self,env,custom_text=None,env_image=None):
         self.frames = [] if getattr(self,"frames",None) is None else getattr(self,"frames",None) 
         if env_image is None:
-            self.frames.append(env.render(mode="rgb_array"))
+            img=env.render(mode="rgb_array")
         else:
-            self.frames.append(env_image)
+            img=env_image
+        if custom_text is not None:
+            Img=Image.fromarray(img)
+            draw = ImageDraw.Draw(Img)
+            draw.text((0,0), f"{custom_text}", (255,255,0))
+            img=np.array(Img)
+        
+        self.frames.append(img)
         self.env=env
 
     def save_gif(self, 
@@ -82,7 +91,12 @@ class envhelper(object):
         path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
         os.makedirs(path,exist_ok=True)
         
-        dirs = path.joinpath(str(self.env).split(" ")[0].replace("<",""))
+        try:
+            env_name=self.env.spec.id
+        except Exception as err:
+            print(err)
+            env_name=str(self.env).split(" ")[0].replace("<","-").replace(">","-").strip("-")
+        dirs = path.joinpath(env_name)
         # try:
         #     dirs = path.joinpath(self.env.spec.id)
         # except:
