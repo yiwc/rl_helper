@@ -4,8 +4,9 @@ from datetime import datetime
 import os
 from PIL import Image, ImageFont, ImageDraw
 import numpy as np
-
+from rl_helper.utils import get_envname
 import pathlib
+
 def save_img(np_array,img_name="your_file")->None:
     from PIL import Image
     im = Image.fromarray(np_array)
@@ -25,17 +26,30 @@ def now()->str:
     t=now.strftime("%Y%m%d-%H%M%S")
     return t
 
+global GLOBAL_VIRTUAL_DISPLAY
+GLOBAL_VIRTUAL_DISPLAY={}
+
 class envhelper(object):
 
     def __init__(self) -> None:
 
         print("rl init the display... (if not respond in 5s, please kill this process)")
-        from pyvirtualdisplay import Display
-        self.virtual_display = Display(visible=0, size=(1400, 900))
-        self.virtual_display.start()
+
+        global GLOBAL_VIRTUAL_DISPLAY
+        if GLOBAL_VIRTUAL_DISPLAY.get("display",None) is None:
+            from pyvirtualdisplay import Display
+            self.virtual_display = Display(visible=0, size=(1400, 900))
+            self.virtual_display.start()
+            GLOBAL_VIRTUAL_DISPLAY["display"]=self.virtual_display
+        else:
+            self.virtual_display=GLOBAL_VIRTUAL_DISPLAY["display"]
         print("rl helper inited")
         super().__init__()
  
+    def stop(self):
+        self.virtual_display.stop()
+        
+
     def recording(self,env,custom_text=None,env_image=None):
         self.frames = [] if getattr(self,"frames",None) is None else getattr(self,"frames",None) 
         if env_image is None:
@@ -91,11 +105,12 @@ class envhelper(object):
         path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
         os.makedirs(path,exist_ok=True)
         
-        try:
-            env_name=self.env.spec.id
-        except Exception as err:
-            print(err)
-            env_name=str(self.env).split(" ")[0].replace("<","-").replace(">","-").strip("-")
+        # try:
+        #     env_name=self.env.spec.id
+        # except Exception as err:
+        #     print(err)
+        #     env_name=str(self.env).split(" ")[0].replace("<","-").replace(">","-").strip("-")
+        env_name=get_envname(self.env)
         dirs = path.joinpath(env_name)
         # try:
         #     dirs = path.joinpath(self.env.spec.id)
@@ -109,4 +124,4 @@ class envhelper(object):
         if refresh:
             del self.frames
 
-        self.virtual_display.stop()
+        # self.virtual_display.stop()
