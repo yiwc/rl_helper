@@ -66,11 +66,11 @@ class envhelper(object):
         self.env=env
 
     def save_gif(self, 
-    path=None, 
+    path, 
     comment="",
-    filename=None,
+    # filename=None,
     times=5,
-    name="default",
+    # name="default",
     refresh=True):
         """
         save frames to gif
@@ -102,7 +102,8 @@ class envhelper(object):
         t=now()
         # assert path is None and filename is None, "not support diy path and filename"
         gif_name="{t}{comment}.gif".format(t=t,comment="_{}".format(comment))
-        path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
+        # path = pathlib.Path("./runs/") if path is None else pathlib.Path(path)
+        path = pathlib.Path(path)
         os.makedirs(path,exist_ok=True)
         
         # try:
