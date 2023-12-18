@@ -1,8 +1,9 @@
 import time
 import numpy as np
-from gym.vector.async_vector_env import AsyncVectorEnv
-from gym.vector.sync_vector_env import SyncVectorEnv
-from gym.vector.vector_env import VectorEnv, VectorEnvWrapper
+import gymnasium as gym
+from gymnasium.vector.async_vector_env import AsyncVectorEnv
+# from gym.vector.sync_vector_env import SyncVectorEnv
+# from gym.vector.vector_env import VectorEnv, VectorEnvWrapper
 def fps(env,steps_per_test=100,episode=10):
     
     result_multiply=env.num_envs if isinstance(env,AsyncVectorEnv) else 1
